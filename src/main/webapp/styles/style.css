@@ -1,0 +1,100 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 24/03/2026, 9:30:28 p. m.
+    Author     : Usuario
+*/
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    background-color: #1b5e20 !important;
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand {
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+/* ===== CONTENEDOR ===== */
+.container {
+    margin-top: 50px;
+}
+
+/* ===== TARJETA ===== */
+.card-custom {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    width: 60%;
+    margin: auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* ===== TITULOS ===== */
+h2 {
+    color: #1b5e20;
+}
+
+/* ===== NAVBAR ANIMADO ===== */
+.navbar .nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    color: #a5d6a7 !important;
+    transform: scale(1.05);
+}
+
+.navbar .nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #a5d6a7;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+.navbar .nav-link:hover::after {
+    width: 100%;
+}
+
+.navbar .navbar-brand {
+    transition: 0.3s;
+}
+
+.navbar .navbar-brand:hover {
+    transform: scale(1.1);
+    color: #a5d6a7 !important;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    background: rgba(0,0,0,0.2);
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 150px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
