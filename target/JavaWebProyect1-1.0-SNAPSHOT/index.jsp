@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Modelo.Usuario"%>
 <!DOCTYPE html>
 
 <html>
@@ -19,9 +20,9 @@
 </head>
 <body>
 
+
 <%
-    
-    String usuario = (String) session.getAttribute("usuario");
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
 
     if (usuario == null) {
         response.sendRedirect("login.jsp");
@@ -33,18 +34,37 @@
 
 <div class="container">
 
-    <div class="card-custom">
-        
-        
-        <h2>Bienvenido, <%= usuario %></h2>
+    <div class="card-custom text-center">
 
-        <p>Sistema de gestión de cultivos en Nariño.</p>
+        <img src="images/img1.png" class="logo" alt="Logo">
 
-        <ul>
-            <li>Registrar cultivos</li>
-            <li>Administrar usuarios</li>
-            <li>Filtrar por tipo y ubicación</li>
-        </ul>
+        <h2>Bienvenido, <%= usuario.getUsuario() %></h2>
+
+        <p class="mt-3">
+            Sistema de gestión de cultivos en Nariño que permite
+            administrar cultivos de manera eficiente.
+        </p>
+
+        <hr>
+
+        <div class="row mt-4">
+
+            <div class="col-md-12 mb-3">
+                <a href="ServletCultivos?accion=listar"
+                   class="btn btn-success w-100">
+                    Ver Cultivos
+                </a>
+            </div>
+
+        </div>
+
+        <div class="mt-4">
+            <ul class="list-group">
+                <li class="list-group-item">Registrar cultivos</li>
+                <li class="list-group-item">Editar y eliminar cultivos</li>
+                <li class="list-group-item">Filtrar por tipo y ubicación</li>
+            </ul>
+        </div>
 
     </div>
 

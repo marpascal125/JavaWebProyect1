@@ -1,5 +1,7 @@
 Servlets\ServletCultivos.class
+Modelo\GestionarUsuarios.class
 com\mycompany\javawebproyect1\JakartaRestConfiguration.class
+Modelo\GestionarCultivos.class
 Modelo\Usuario.class
 Servlets\ServletUsuarios.class
 com\mycompany\javawebproyect1\resources\JakartaEE10Resource.class

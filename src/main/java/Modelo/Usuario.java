@@ -17,11 +17,11 @@ public class Usuario {
     private String telefono;
     private String password;
 
-    
+
     public Usuario() {
     }
 
-    
+
     public Usuario(String nombre, String correo, String usuario, String telefono, String password) {
         this.nombre = nombre;
         this.correo = correo;
@@ -30,45 +30,66 @@ public class Usuario {
         this.password = password;
     }
 
-    
 
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
     public String getUsuario() {
         return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
     public String getPassword() {
         return password;
     }
 
+
+    public void setNombre(String nombre) {
+        if (nombre != null && !nombre.isEmpty()) {
+            this.nombre = nombre;
+        }
+    }
+
+    public void setCorreo(String correo) {
+        if (correo != null && correo.contains("@")) {
+            this.correo = correo;
+        }
+    }
+
+    public void setUsuario(String usuario) {
+        if (usuario != null && !usuario.isEmpty()) {
+            this.usuario = usuario;
+        }
+    }
+
+    public void setTelefono(String telefono) {
+        if (telefono != null && !telefono.isEmpty()) {
+            this.telefono = telefono;
+        }
+    }
+
     public void setPassword(String password) {
-        this.password = password;
+        if (password != null && password.length() >= 4) {
+            this.password = password;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nombre='" + nombre + '\'' +
+                ", correo='" + correo + '\'' +
+                ", usuario='" + usuario + '\'' +
+                ", telefono='" + telefono + '\'' +
+                '}';
+        
     }
 }

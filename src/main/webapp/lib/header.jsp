@@ -1,49 +1,74 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Modelo.Usuario"%>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow">
 
-    <a class="navbar-brand" href="index.jsp">AgroSmart Nariño</a>
+    <div class="container-fluid">
 
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto">
+        <a class="navbar-brand d-flex align-items-center" href="index.jsp">
+            <img src="images/img1.png" width="40" style="margin-right:10px;">
+            AgroSmart Nariño
+        </a>
 
-        <li class="nav-item">
-          <a class="nav-link" href="index.jsp">Inicio</a>
-        </li>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
 
-        <%
-            String usuario = (String) session.getAttribute("usuario");
-        %>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.jsp">Inicio</a>
+                </li>
 
-        <% if (usuario == null) { %>
+                <%
+                    Usuario usuario = (Usuario) session.getAttribute("usuario");
+                %>
 
-            
-            <li class="nav-item">
-              <a class="nav-link" href="login.jsp">Iniciar Sesión</a>
-            </li>
+                <% if (usuario == null) { %>
 
-            <li class="nav-item">
-              <a class="nav-link" href="registrar.jsp">Registrarse</a>
-            </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.jsp">
+                            Iniciar Sesión
+                        </a>
+                    </li>
 
-        <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registrar.jsp">
+                            Registrarse
+                        </a>
+                    </li>
 
-            
-            <li class="nav-item">
-              <span class="nav-link">👤 <%= usuario %></span>
-            </li>
+                <% } else { %>
 
-            <li class="nav-item">
-              <a class="nav-link" href="logout.jsp">Cerrar sesión</a>
-            </li>
 
-        <% } %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="adminCultivos.jsp">
+                            Registrar Cultivo
+                        </a>
+                    </li>
 
-      </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ServletCultivos?accion=listar">
+                            Ver Cultivos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            <%= usuario.getUsuario() %>
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-warning"
+                           href="ServletUsuarios?accion=logout">
+                           Cerrar sesión
+                        </a>
+                    </li>
+
+                <% } %>
+
+            </ul>
+        </div>
+
     </div>
-
-  </div>
 </nav>
 
 <hr>

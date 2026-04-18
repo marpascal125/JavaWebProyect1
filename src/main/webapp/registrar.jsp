@@ -23,63 +23,97 @@
 
 </head>
 <body>
+   
+
+<%
+    if (session.getAttribute("usuario") != null) {
+        response.sendRedirect("index.jsp");
+        return;
+    }
+%>
 
 <jsp:include page="lib/header.jsp"/>
 
 <div class="container">
+
     <div class="card-custom">
-        
-        <img src="images/img1.png" class="logo" alt="Logo" width="150">
 
-        <h2>Registrar</h2>
-        <br><br>
+        <img src="images/img1.png" class="logo" alt="Logo">
 
-        
+        <h2 class="text-center">Registro de Usuario</h2>
+
+        <%
+            String error = request.getParameter("error");
+
+            if ("1".equals(error)) {
+        %>
+            <div class="alert alert-danger text-center">
+                Debes completar todos los campos obligatorios
+            </div>
+        <%
+            } else if ("2".equals(error)) {
+        %>
+            <div class="alert alert-danger text-center">
+                Las contraseñas no coinciden
+            </div>
+        <%
+            } else if ("3".equals(error)) {
+        %>
+            <div class="alert alert-danger text-center">
+                El usuario ya existe
+            </div>
+        <%
+            }
+        %>
+
         <form action="ServletUsuarios" method="post">
 
-           
             <input type="hidden" name="accion" value="registrar">
 
-            <label>Nombre</label>
-            <input type="text" name="nombre" class="form-control">
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" name="nombre" class="form-control" required>
+            </div>
 
-            <br>
+            <div class="mb-3">
+                <label class="form-label">Correo</label>
+                <input type="email" name="correo" class="form-control" required>
+            </div>
 
-            <label>Correo</label>
-            <input type="email" name="correo" class="form-control">
+            <div class="mb-3">
+                <label class="form-label">Usuario</label>
+                <input type="text" name="usuario" class="form-control" required>
+            </div>
 
-            <br>
+            <div class="mb-3">
+                <label class="form-label">Teléfono</label>
+                <input type="tel" name="telefono" class="form-control" required>
+            </div>
 
-            <label>Usuario</label>
-            <input type="text" name="usuario" class="form-control">
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
 
-            <br>
+            <div class="mb-3">
+                <label class="form-label">Confirmar contraseña</label>
+                <input type="password" name="confirmar" class="form-control" required>
+            </div>
 
-            <label>Teléfono</label>
-            <input type="tel" name="telefono" class="form-control">
-
-            <br>
-
-            <label>Contraseña</label>
-            <input type="password" name="password" class="form-control">
-
-            <br>
-
-            <label>Confirmar contraseña</label>
-            <input type="password" name="confirmar" class="form-control">
-
-            <br>
-
-            
-            <button type="submit" class="btn btn-success">Registrarse</button>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">
+                    Registrarse
+                </button>
+            </div>
 
         </form>
 
-        <br>
-
-        <a href="index.jsp" class="btn btn-success">Salir</a>
+        <div class="text-center mt-3">
+            <a href="login.jsp">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
 
     </div>
+
 </div>
 
 <jsp:include page="lib/footer.jsp"/>

@@ -5,76 +5,123 @@
 package Servlets;
 
 import Modelo.Usuario;
+import Modelo.GestionarUsuarios;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
-import java.util.ArrayList;
 
 public class ServletUsuarios extends HttpServlet {
 
-    
-    private static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request,
+                                  HttpServletResponse response)
             throws ServletException, IOException {
 
         String accion = request.getParameter("accion");
 
-        
-        if ("registrar".equals(accion)) {
-
-            String nombre = request.getParameter("nombre");
-            String correo = request.getParameter("correo");
-            String usuario = request.getParameter("usuario");
-            String telefono = request.getParameter("telefono");
-            String password = request.getParameter("password");
-
-            Usuario u = new Usuario(nombre, correo, usuario, telefono, password);
-
-            
-            listaUsuarios.add(u);
-
-            response.sendRedirect("login.jsp");
+        if (accion == null) {
+            response.sendRedirect("index.jsp");
             return;
         }
 
-        
-        if ("login".equals(accion)) {
+        switch (accion) {
 
-            String usuario = request.getParameter("usuario");
-            String password = request.getParameter("password");
+            case "registrar": {
 
-            for (Usuario u : listaUsuarios) {
+                String nombre = request.getParameter("nombre");
+                String correo = request.getParameter("correo");
+                String usuario = request.getParameter("usuario");
+                String telefono = request.getParameter("telefono");
+                String password = request.getParameter("password");
+                String confirmar = request.getParameter("confirmar");
 
-                if (u.getUsuario().equals(usuario) && u.getPassword().equals(password)) {
+                if (usuario == null || usuario.isEmpty() ||
+                    password == null || password.isEmpty()) {
 
-                    HttpSession session = request.getSession();
-                    session.setAttribute("usuario", usuario);
+                    response.sendRedirect("registrar.jsp?error=1");
+                    return;
+                }
+
+                if (!password.equals(confirmar)) {
+                    response.sendRedirect("registrar.jsp?error=2");
+                    return;
+                }
+
+                if (GestionarUsuarios.buscar(usuario) != null) {
+                    response.sendRedirect("registrar.jsp?error=3");
+                    return;
+                }
+
+                Usuario u = new Usuario(
+                        nombre, correo, usuario, telefono, password);
+
+                GestionarUsuarios.agregar(u);
+
+                response.sendRedirect("login.jsp?registro=ok");
+                return;
+            }
+
+            case "login": {
+
+                String usuario = request.getParameter("usuario");
+                String password = request.getParameter("password");
+
+                if (usuario == null || usuario.isEmpty() ||
+                    password == null || password.isEmpty()) {
+
+                    response.sendRedirect("login.jsp?error=1");
+                    return;
+                }
+
+                Usuario u = GestionarUsuarios.validar(usuario, password);
+
+                if (u != null) {
+
+                    HttpSession session = request.getSession(true);
+
+                    session.setAttribute("usuario", u);
 
                     response.sendRedirect("index.jsp");
+                    return;
+
+                } else {
+                    response.sendRedirect("login.jsp?error=1");
                     return;
                 }
             }
 
-            
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
 
-            out.println("<h2>Usuario o contraseña incorrectos</h2>");
-            out.println("<a href='login.jsp'>Volver</a>");
+            case "logout": {
+
+                HttpSession session = request.getSession(false);
+
+                if (session != null) {
+                    session.invalidate();
+                }
+
+                response.sendRedirect("login.jsp");
+                return;
+            }
+
+            default:
+                response.sendRedirect("index.jsp");
         }
     }
 
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
     }
 
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
     }
 }

@@ -4,7 +4,7 @@
     Author     : Usuario
 --%>
 
-<<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,26 +22,54 @@
 </head>
 <body>
 
+
+<%
+    if (session.getAttribute("usuario") != null) {
+        response.sendRedirect("index.jsp");
+        return;
+    }
+%>
+
 <jsp:include page="lib/header.jsp"/>
 
 <div class="container">
+
     <div class="card-custom">
-        
+
         <img src="images/img1.png" class="logo" alt="Logo">
 
-        
+        <h2 class="text-center">Iniciar Sesión</h2>
+
+        <%
+            String error = request.getParameter("error");
+
+            if ("1".equals(error)) {
+        %>
+            <div class="alert alert-danger text-center">
+                Usuario o contraseña incorrectos
+            </div>
+        <%
+            }
+        %>
+
         <form action="ServletUsuarios" method="post">
 
             <input type="hidden" name="accion" value="login">
 
             <div class="mb-3">
                 <label class="form-label">Usuario</label>
-                <input type="text" name="usuario" class="form-control" placeholder="Ingresa tu usuario">
+                <input type="text"
+                       name="usuario"
+                       class="form-control"
+                       required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Contraseña</label>
-                <input type="password" name="password" class="form-control" placeholder="Ingresa tu contraseña">
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       required>
             </div>
 
             <div class="d-grid">
@@ -49,13 +77,17 @@
                     Ingresar
                 </button>
             </div>
+            
+            <div class="text-center mt-4">
+                <a href="restaurar.jsp">
+                    ¿Olvidaste tu contraseña?
+                </a>
+            </div>
 
         </form>
-        
-        <br>
-        <a href="restaurar.jsp">Olvide mi contraseña</a>
 
     </div>
+
 </div>
 
 <jsp:include page="lib/footer.jsp"/>

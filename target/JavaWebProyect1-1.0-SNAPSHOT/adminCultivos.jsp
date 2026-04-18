@@ -22,34 +22,102 @@
 
 </head>
 <body>
+    
+
+<%
+if (session.getAttribute("usuario") == null) {
+    response.sendRedirect("login.jsp");
+    return;
+}
+%>
 
 <jsp:include page="lib/header.jsp"/>
 
 <div class="container">
-    <div class="card-custom">
 
-       <h2>Registrar Cultivo</h2>
+<div class="card-custom">
 
-        <form action="ServletCultivos" method="post">
+<div class="d-flex justify-content-between mb-3">
 
-            <label>Tipo</label>
-            <input type="text" name="tipo" class="form-control">
+    <a href="index.jsp" class="btn btn-secondary btn-sm">
+        Inicio
+    </a>
 
-            <label>Área</label>
-            <input type="number" name="area" class="form-control">
+    <a href="ServletCultivos?accion=listar"
+       class="btn btn-success btn-sm">
+       Ver Cultivos
+    </a>
 
-            <label>Ubicación</label>
-            <input type="text" name="ubicacion" class="form-control">
+</div>
 
-            <button class="btn btn-success">Guardar</button>
+<h2 class="text-center">Administrar Cultivos</h2>
 
-        </form>
+<p class="text-center text-muted">
+    Registra nuevos cultivos agrícolas
+</p>
 
+<form action="ServletCultivos" method="post">
+
+    <input type="hidden" name="accion" value="crear">
+
+    <div class="mb-3">
+        <label class="form-label">Tipo de cultivo</label>
+        <input type="text"
+               name="tipo"
+               class="form-control"
+               placeholder="Ej: Papa, Café..."
+               required>
     </div>
+
+    <div class="mb-3">
+        <label class="form-label">Área (hectáreas)</label>
+        <input type="number"
+               step="0.1"
+               name="area"
+               class="form-control"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Ubicación</label>
+        <input type="text"
+               name="ubicacion"
+               class="form-control"
+               placeholder="Ej: Nariño"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha de siembra</label>
+        <input type="date"
+               name="fechaSiembra"
+               class="form-control"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Estado del cultivo</label>
+
+        <select name="estado" class="form-select">
+
+            <option value="Activo">Activo</option>
+            <option value="Finalizado">Finalizado</option>
+
+        </select>
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-success">
+            Guardar Cultivo
+        </button>
+    </div>
+
+</form>
+
+</div>
 </div>
 
 <jsp:include page="lib/footer.jsp"/>
 
 </body>
 </html>
-
