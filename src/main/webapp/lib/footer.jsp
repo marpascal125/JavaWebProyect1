@@ -1,4 +1,3 @@
 <footer>
-    <hr>
-    <p>© 2026 - Sistema de Cultivos</p>
+    <p> &copy; 2026 AgroSmart Nariño &mdash; Sistema de Gestion de Cultivos</p>
 </footer>

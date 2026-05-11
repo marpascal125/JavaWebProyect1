@@ -24,73 +24,64 @@
 
 
 <%
-    if (session.getAttribute("usuario") != null) {
-        response.sendRedirect("index.jsp");
-        return;
-    }
+if (session.getAttribute("usuario") != null) {
+    response.sendRedirect("index.jsp");
+    return;
+}
 %>
 
 <jsp:include page="lib/header.jsp"/>
 
 <div class="container">
+<div class="card-custom">
 
-    <div class="card-custom">
+    <img src="images/img1.png" class="logo" alt="Logo">
+    <h2 class="text-center">Iniciar Sesión</h2>
 
-        <img src="images/img1.png" class="logo" alt="Logo">
+    <%
+    String registro = request.getParameter("registro");
+    if ("ok".equals(registro)) {
+    %>
+        <div class="alert alert-success text-center">
+            Usuario registrado correctamente. Ya puedes iniciar sesión.
+        </div>
+    <% } %>
 
-        <h2 class="text-center">Iniciar Sesión</h2>
+    <%
+    String error = request.getParameter("error");
+    if ("1".equals(error)) {
+    %>
+        <div class="alert alert-danger text-center">
+            Usuario o contrasena incorrectos.
+        </div>
+    <% } %>
 
-        <%
-            String error = request.getParameter("error");
+    <form action="ServletUsuarios" method="post">
+        
+        <input type="hidden" name="accion" value="login">
 
-            if ("1".equals(error)) {
-        %>
-            <div class="alert alert-danger text-center">
-                Usuario o contraseña incorrectos
-            </div>
-        <%
-            }
-        %>
+        <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <input type="text" name="usuario" class="form-control" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Contrasena</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
 
-        <form action="ServletUsuarios" method="post">
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success">Ingresar</button>
+        </div>
 
-            <input type="hidden" name="accion" value="login">
+        <div class="text-center mt-4">
+            <a href="restaurar.jsp">Olvidaste tu contrasena?</a>
+        </div>
+    </form>
 
-            <div class="mb-3">
-                <label class="form-label">Usuario</label>
-                <input type="text"
-                       name="usuario"
-                       class="form-control"
-                       required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Contraseña</label>
-                <input type="password"
-                       name="password"
-                       class="form-control"
-                       required>
-            </div>
-
-            <div class="d-grid">
-                <button type="submit" class="btn btn-success">
-                    Ingresar
-                </button>
-            </div>
-            
-            <div class="text-center mt-4">
-                <a href="restaurar.jsp">
-                    ¿Olvidaste tu contraseña?
-                </a>
-            </div>
-
-        </form>
-
-    </div>
-
+</div>
 </div>
 
 <jsp:include page="lib/footer.jsp"/>
-
 </body>
 </html>

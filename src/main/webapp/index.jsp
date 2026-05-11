@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Modelo.Usuario"%>
+<%@page import="Modelo.GestionarCultivos"%>
 <!DOCTYPE html>
 
 <html>
@@ -22,55 +23,88 @@
 
 
 <%
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
+Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-    if (usuario == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
+if (usuario == null) { response.sendRedirect("login.jsp"); return; }
+
+int totalCultivos = GestionarCultivos.listar().size();
+
+long activos = GestionarCultivos.listar().stream()
+               .filter(c -> "Activo".equals(c.getEstado())).count();
 %>
 
 <jsp:include page="lib/header.jsp"/>
 
 <div class="container">
-
-    <div class="card-custom text-center">
+    <div class="card-custom text-center" style="max-width:700px;">
 
         <img src="images/img1.png" class="logo" alt="Logo">
-
         <h2>Bienvenido, <%= usuario.getUsuario() %></h2>
-
-        <p class="mt-3">
-            Sistema de gestión de cultivos en Nariño que permite
-            administrar cultivos de manera eficiente.
+        <p class="text-muted mt-2">
+            Gestiona tus cultivos de forma eficiente desde un solo lugar.
         </p>
 
-        <hr>
-
-        <div class="row mt-4">
-
-            <div class="col-md-12 mb-3">
-                <a href="ServletCultivos?accion=listar"
-                   class="btn btn-success w-100">
-                    Ver Cultivos
-                </a>
+        <div class="row mt-4 g-3">
+            <div class="col-6">
+                <div style="background:#e8f5e9; border-radius:12px; padding:16px;">
+                    <div style="font-size:2rem; font-weight:700; color:#1a4a1e;">
+                        <%= totalCultivos %>
+                    </div>
+                    <div style="font-size:0.82rem; color:#546e5a; font-weight:500;">
+                        Total Cultivos
+                    </div>
+                </div>
             </div>
-
+            <div class="col-6">
+                <div style="background:#e8f5e9; border-radius:12px; padding:16px;">
+                    <div style="font-size:2rem; font-weight:700; color:#2d6a34;">
+                        <%= activos %>
+                    </div>
+                    <div style="font-size:0.82rem; color:#546e5a; font-weight:500;">
+                        Activos
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="mt-4">
-            <ul class="list-group">
-                <li class="list-group-item">Registrar cultivos</li>
-                <li class="list-group-item">Editar y eliminar cultivos</li>
-                <li class="list-group-item">Filtrar por tipo y ubicación</li>
-            </ul>
+        <div class="d-grid gap-2 mt-4">
+            <a href="ServletCultivos?accion=listar" class="btn btn-success">
+                Ver todos los cultivos
+            </a>
+            <a href="adminCultivos.jsp" class="btn btn-secondary">
+                Registrar nuevo cultivo
+            </a>
+        </div>
+
+        <hr style="margin: 28px 0 20px 0;">
+        
+        <div class="row g-3 text-center">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon">🌾</span>
+                    <h5>Registrar</h5>
+                    <p>Agrega nuevos cultivos con tipo, area y ubicacion.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon">✏️</span>
+                    <h5>Administrar</h5>
+                    <p>Edita o elimina cultivos obsoletos facilmente.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon">🔍</span>
+                    <h5>Filtrar</h5>
+                    <p>Busca cultivos por tipo de planta o ubicacion.</p>
+                </div>
+            </div>
         </div>
 
     </div>
-
 </div>
 
 <jsp:include page="lib/footer.jsp"/>
-
 </body>
 </html>
